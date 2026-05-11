@@ -11,7 +11,7 @@ const AppContextProvider = ({ children }) => {
   })
   const [toast, setToast] = useState({ visible: false, message: '', type: 'success' })
 
-  const backendUrl = 'http://localhost:3000'
+  const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000'
 
   const login = useCallback((userData) => {
     setUser(userData)
