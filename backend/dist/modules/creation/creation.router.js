@@ -1,0 +1,20 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const auth_middleware_1 = require("../../middleware/auth.middleware");
+const validation_middleware_1 = require("../../middleware/validation.middleware");
+const creation_dto_1 = require("./creation.dto");
+const creation_controller_1 = __importDefault(require("./creation.controller"));
+const multer_1 = require("../../config/multer");
+const router = (0, express_1.Router)();
+router.post("/generate-article", auth_middleware_1.Authenticate, (0, validation_middleware_1.isValid)(creation_dto_1.generateArticleSchema), creation_controller_1.default.generateArticle);
+router.post("/generate-title", auth_middleware_1.Authenticate, (0, validation_middleware_1.isValid)(creation_dto_1.generateBlogTitleSchema), creation_controller_1.default.generateBlogTitle);
+router.post("/generate-image", auth_middleware_1.Authenticate, (0, validation_middleware_1.isValid)(creation_dto_1.generateImageSchema), creation_controller_1.default.generateImage);
+router.patch("/remove-background", multer_1.upload.single("image"), auth_middleware_1.Authenticate, creation_controller_1.default.removeImageBackground);
+router.patch("/remove-object", multer_1.upload.single("image"), auth_middleware_1.Authenticate, (0, validation_middleware_1.isValid)(creation_dto_1.removeImageObjectSchema), creation_controller_1.default.removeImageObject);
+router.post("/resume-review", multer_1.upload.single("resume"), auth_middleware_1.Authenticate, creation_controller_1.default.resumeReview);
+router.get("/published", auth_middleware_1.Authenticate, creation_controller_1.default.getPublishedCreations);
+exports.default = router;

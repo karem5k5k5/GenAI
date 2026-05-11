@@ -1,0 +1,21 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const user_controller_1 = __importDefault(require("./user.controller"));
+const validation_middleware_1 = require("../../middleware/validation.middleware");
+const user_dto_1 = require("./user.dto");
+const auth_middleware_1 = require("../../middleware/auth.middleware");
+const router = (0, express_1.Router)();
+router.post("/register", (0, validation_middleware_1.isValid)(user_dto_1.registerSchema), user_controller_1.default.register);
+router.post("/verify", (0, validation_middleware_1.isValid)(user_dto_1.verifyEmailSchema), user_controller_1.default.verifyEmail);
+router.post("/login", (0, validation_middleware_1.isValid)(user_dto_1.loginSchema), user_controller_1.default.login);
+router.post("/resend-otp", (0, validation_middleware_1.isValid)(user_dto_1.resendOTPSchema), user_controller_1.default.resendOTP);
+router.post("/logout", auth_middleware_1.Authenticate, user_controller_1.default.logout);
+router.post("/google-login", (0, validation_middleware_1.isValid)(user_dto_1.googleLoginSchema), user_controller_1.default.googleLogin);
+router.patch("/reset-password", (0, validation_middleware_1.isValid)(user_dto_1.resetPasswordSchema), user_controller_1.default.resetPassword);
+router.get("/creations", auth_middleware_1.Authenticate, user_controller_1.default.getUserCreations);
+router.patch("/toggle-like/:id", auth_middleware_1.Authenticate, user_controller_1.default.toggleLikeCreation);
+exports.default = router;
