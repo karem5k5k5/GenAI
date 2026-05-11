@@ -7,7 +7,7 @@ import creationRepository from "../../db/model/creation/creation.repository";
 import cloudinaryService from "../../pkg/cloudinary/cloudinary.service";
 import clibDropService from "../../pkg/clibdrop";
 import fs from "fs";
-import { PDFParse } from "pdf-parse";
+import pdfParse from "pdf-parse";
 
 class CreationService {
     async generateArticle(generateArticleDTO: GenerateArticleDTO, user: IUser) {
@@ -112,8 +112,7 @@ class CreationService {
         const dataBuffer = fs.readFileSync(resume.path);
 
         // parse pdf file
-        const pdf = new PDFParse({ data: new Uint8Array(dataBuffer) });
-        const pdfData = await pdf.getText();
+        const pdfData = await pdfParse(dataBuffer);
 
         // create prompt
         const prompt = `Review this resume and provide feedback on the following:
