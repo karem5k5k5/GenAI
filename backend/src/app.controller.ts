@@ -17,7 +17,7 @@ export const bootstrap = (app: Express, express: any) => {
     // parse cookies 
     app.use(cookieParser())
     // setup cors
-    const allowedOrigins = ["http://localhost:5173", "https://gen-ai-frontend-omega.vercel.app/"]
+    const allowedOrigins = ["http://localhost:5173", "https://gen-ai-frontend-omega.vercel.app"]
     app.use(cors({
         origin: (origin, callback) => {
             if (!origin || allowedOrigins.includes(origin)) callback(null, true)

@@ -10,11 +10,11 @@ const sendMail = async (opts) => {
     const transporter = nodemailer_1.default.createTransport({
         host: "smtp.gmail.com",
         port: 587,
-        family: 4,
+        secure: false,
         auth: {
             user: env_1.envConfig.nodemailerEmail,
-            pass: env_1.envConfig.nodemailerPass
-        }
+            pass: env_1.envConfig.nodemailerPass,
+        },
     });
     await transporter.sendMail(opts);
 };
