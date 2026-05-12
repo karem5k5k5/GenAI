@@ -21,8 +21,14 @@ const bootstrap = (app, express) => {
     // parse cookies 
     app.use((0, cookie_parser_1.default)());
     // setup cors
+    const allowedOrigins = ["http://localhost:5173", "https://gen-ai-frontend-omega.vercel.app/"];
     app.use((0, cors_1.default)({
-        origin: "http://localhost:5173",
+        origin: (origin, callback) => {
+            if (!origin || allowedOrigins.includes(origin))
+                callback(null, true);
+            else
+                callback(new Error("Not allowed by CORS"));
+        },
         credentials: true
     }));
     // default router

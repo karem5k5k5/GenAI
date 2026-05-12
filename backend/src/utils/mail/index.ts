@@ -1,16 +1,19 @@
-import nodemailer, { SendMailOptions } from "nodemailer"
-import { envConfig } from "../../config/env"
+import nodemailer, { SendMailOptions } from "nodemailer";
 
-export const sendMail = async(opts: SendMailOptions)=>{
+import SMTPTransport from "nodemailer/lib/smtp-transport";
+
+import { envConfig } from "../../config/env";
+
+export const sendMail = async (opts: SendMailOptions) => {
     const transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
         port: 587,
-        family: 4,
+        secure: false,
         auth: {
             user: envConfig.nodemailerEmail,
-            pass: envConfig.nodemailerPass
-        }
-    })
+            pass: envConfig.nodemailerPass,
+        },
+    } as SMTPTransport.Options);
 
-    await transporter.sendMail(opts)
-}
+    await transporter.sendMail(opts);
+};

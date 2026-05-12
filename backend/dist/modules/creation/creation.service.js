@@ -10,7 +10,7 @@ const creation_repository_1 = __importDefault(require("../../db/model/creation/c
 const cloudinary_service_1 = __importDefault(require("../../pkg/cloudinary/cloudinary.service"));
 const clibdrop_1 = __importDefault(require("../../pkg/clibdrop"));
 const fs_1 = __importDefault(require("fs"));
-const pdf_parse_1 = require("pdf-parse");
+const pdf_parse_1 = __importDefault(require("pdf-parse"));
 class CreationService {
     async generateArticle(generateArticleDTO, user) {
         // call AI agent service
@@ -91,8 +91,7 @@ class CreationService {
         // read pdf file data
         const dataBuffer = fs_1.default.readFileSync(resume.path);
         // parse pdf file
-        const pdf = new pdf_parse_1.PDFParse({ data: new Uint8Array(dataBuffer) });
-        const pdfData = await pdf.getText();
+        const pdfData = await (0, pdf_parse_1.default)(dataBuffer);
         // create prompt
         const prompt = `Review this resume and provide feedback on the following:
         - strengths
