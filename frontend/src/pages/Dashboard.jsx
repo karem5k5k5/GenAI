@@ -39,7 +39,7 @@ const Dashboard = () => {
             <h2 className="text-sm">Total Creations</h2>
             <p className="text-xl font-semibold">{creations.length}</p>
           </div>
-          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#3588f2] to-[#0bb0d7] text-white flex justify-center items-center">
+          <div className="w-10 h-10 rounded-lg bg-linear-to-br from-[#3588f2] to-[#0bb0d7] text-white flex justify-center items-center">
             <Sparkles className="w-5 text-white" />
           </div>
         </div>

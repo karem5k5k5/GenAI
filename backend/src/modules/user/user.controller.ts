@@ -36,10 +36,11 @@ class UserController {
         const token = await userService.login(loginDTO)
 
         // inject token into cookies
+        const isProduction = envConfig.nodeEnv === "production"
         res.cookie("accessToken", token, {
             httpOnly: true,
-            secure: envConfig.nodeEnv === "production",
-            sameSite: "strict",
+            secure: isProduction,
+            sameSite: isProduction ? "none" : "lax",
             maxAge: 7 * 24 * 60 * 60 * 1000
         })
 
@@ -60,10 +61,11 @@ class UserController {
 
     async logout(req: Request, res: Response) {
         // destroy token
+        const isProduction = envConfig.nodeEnv === "production"
         res.clearCookie("accessToken", {
             httpOnly: true,
-            secure: envConfig.nodeEnv === "production",
-            sameSite: "strict"
+            secure: isProduction,
+            sameSite: isProduction ? "none" : "lax"
         })
 
         // send response
@@ -78,10 +80,11 @@ class UserController {
         const token = await userService.googleLogin(googleLoginDTO)
 
         // inject token into cookies
+        const isProduction = envConfig.nodeEnv === "production"
         res.cookie("accessToken", token, {
             httpOnly: true,
-            secure: envConfig.nodeEnv === "production",
-            sameSite: "strict",
+            secure: isProduction,
+            sameSite: isProduction ? "none" : "lax",
             maxAge: 7 * 24 * 60 * 60 * 1000
         })
 
