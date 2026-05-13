@@ -29,10 +29,11 @@ class UserController {
         // implement business logic
         const token = await user_service_1.default.login(loginDTO);
         // inject token into cookies
+        const isProduction = env_1.envConfig.nodeEnv === "production";
         res.cookie("accessToken", token, {
             httpOnly: true,
-            secure: env_1.envConfig.nodeEnv === "production",
-            sameSite: "strict",
+            secure: isProduction,
+            sameSite: isProduction ? "none" : "lax",
             maxAge: 7 * 24 * 60 * 60 * 1000
         });
         // send response
@@ -48,10 +49,11 @@ class UserController {
     }
     async logout(req, res) {
         // destroy token
+        const isProduction = env_1.envConfig.nodeEnv === "production";
         res.clearCookie("accessToken", {
             httpOnly: true,
-            secure: env_1.envConfig.nodeEnv === "production",
-            sameSite: "strict"
+            secure: isProduction,
+            sameSite: isProduction ? "none" : "lax"
         });
         // send response
         return res.status(200).json({ success: true, message: "logout successfully" });
@@ -62,10 +64,11 @@ class UserController {
         // implement business logic
         const token = await user_service_1.default.googleLogin(googleLoginDTO);
         // inject token into cookies
+        const isProduction = env_1.envConfig.nodeEnv === "production";
         res.cookie("accessToken", token, {
             httpOnly: true,
-            secure: env_1.envConfig.nodeEnv === "production",
-            sameSite: "strict",
+            secure: isProduction,
+            sameSite: isProduction ? "none" : "lax",
             maxAge: 7 * 24 * 60 * 60 * 1000
         });
         // send response
